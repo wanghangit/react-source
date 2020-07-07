@@ -1,0 +1,447 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>render · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="fiber.html" />
+    
+    
+    <link rel="prev" href="description.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">第一部分</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../react/description.html">
+            
+                <a href="../react/description.html">
+            
+                    
+                    React
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../react/createElement.html">
+            
+                <a href="../react/createElement.html">
+            
+                    
+                    createElement
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../react/Component.html">
+            
+                <a href="../react/Component.html">
+            
+                    
+                    Component
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="description.html">
+            
+                <a href="description.html">
+            
+                    
+                    ReactDOM
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.3.1" data-path="render.html">
+            
+                <a href="render.html">
+            
+                    
+                    render
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="fiber.html">
+            
+                <a href="fiber.html">
+            
+                    
+                    fiber
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >render</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="render&#x65B9;&#x6CD5;">render&#x65B9;&#x6CD5;</h1>
+<p>&#x505A;&#x4E3A;&#x5165;&#x53E3;&#x65B9;&#x6CD5;ReactDOM&#x7684;&#x5165;&#x53E3;&#x65B9;&#x6CD5;&#xFF0C;&#x5B9E;&#x9645;&#x8C03;&#x7528;&#x7684;&#x662F;<code>legacyRenderSubtreeIntoContainer</code>
+&#x9996;&#x5148;&#x8981;&#x505A;&#x7684;&#x5C31;&#x662F;&#x5224;&#x65AD;&#x4E4B;&#x524D;&#x662F;&#x5426;&#x751F;&#x6210;&#x8FC7;root&#x5143;&#x7D20;&#x4E5F;&#x5C31;&#x662F;FiberRoot&#x5143;&#x7D20;&#xFF0C;&#x8FD9;&#x662F;&#x6240;&#x6709;Fiber&#x6811;&#x7684;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x5B58;&#x5728;&#x8BF4;&#x660E;&#x662F;&#x7B2C;&#x4E00;&#x6B21;&#x6302;&#x8F7D;&#x7EC4;&#x4EF6;,&#x7B2C;&#x4E00;&#x6B21;&#x6302;&#x8F7D;&#x9700;&#x8981;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;root&#x8282;&#x70B9;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;<code>unbatchedUpdates</code>&#x5305;&#x88F9;&#x56DE;&#x8C03;&#x8C03;&#x7528;<code>root.render</code>&#x65B9;&#x6CD5;,&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x4F1A;&#x8BA9;&#x4EFB;&#x52A1;&#x8C03;&#x5EA6;&#x65F6;&#x91C7;&#x7528;&#x6700;&#x9AD8;&#x4F18;&#x5148;&#x7EA7;SYNC&#x5DE5;&#x4F5C;&#xFF0C;&#x6700;&#x7EC8;&#x4F1A;&#x8C03;&#x7528;<code>updateContainer</code>&#x65B9;&#x6CD5;&#x3002;&#x8FD9;&#x91CC;&#x770B;&#x51FA;react&#x7684;&#x6302;&#x8F7D;&#x66F4;&#x65B0;&#x90FD;&#x662F;&#x4ECE;root&#x5143;&#x7D20;&#x5F00;&#x59CB;&#x66F4;&#x65B0;&#x7684;</p>
+<p><img src="render.drawio.png" alt="render&#x6D41;&#x7A0B;"></p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">legacyRenderSubtreeIntoContainer</span>(<span class="hljs-params">
+  parentComponent: ?React$Component&lt;any, any&gt;,
+  children: ReactNodeList,
+  container: DOMContainer,
+  forceHydrate: boolean,
+  callback: ?Function,
+</span>) </span>{
+  <span class="hljs-keyword">let</span> root: Root = (container._reactRootContainer: any);
+  <span class="hljs-keyword">if</span> (!root) {
+    <span class="hljs-comment">// Initial mount&#x521D;&#x59CB;&#x5316;&#x6E32;&#x67D3;</span>
+    root = container._reactRootContainer = legacyCreateRootFromDOMContainer(
+      container,
+      forceHydrate,
+    );
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> callback === <span class="hljs-string">&apos;function&apos;</span>) {
+      <span class="hljs-keyword">const</span> originalCallback = callback;
+      callback = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">const</span> instance = getPublicRootInstance(root._internalRoot);
+        originalCallback.call(instance);
+      };
+    }
+    <span class="hljs-comment">// Initial mount should not be batched.</span>
+    <span class="hljs-comment">// &#x540C;&#x6B65;&#x521D;&#x59CB;&#x5316;</span>
+    unbatchedUpdates(() =&gt; {
+      <span class="hljs-keyword">if</span> (parentComponent != <span class="hljs-literal">null</span>) {
+        root.legacy_renderSubtreeIntoContainer(
+          parentComponent,
+          children,
+          callback,
+        );
+      } <span class="hljs-keyword">else</span> {
+        root.render(children, callback);
+      }
+    });
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> callback === <span class="hljs-string">&apos;function&apos;</span>) {
+      <span class="hljs-keyword">const</span> originalCallback = callback;
+      callback = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">const</span> instance = getPublicRootInstance(root._internalRoot);
+        originalCallback.call(instance);
+      };
+    }
+    <span class="hljs-comment">// Update</span>
+    <span class="hljs-keyword">if</span> (parentComponent != <span class="hljs-literal">null</span>) {
+      root.legacy_renderSubtreeIntoContainer(
+        parentComponent,
+        children,
+        callback,
+      );
+    } <span class="hljs-keyword">else</span> {
+      root.render(children, callback);
+    }
+  }
+  <span class="hljs-keyword">return</span> getPublicRootInstance(root._internalRoot);
+}
+
+<span class="hljs-comment">// FiberRoot&#x6784;&#x9020;&#x51FD;&#x6570;</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ReactRoot</span>(<span class="hljs-params">
+  container: DOMContainer,
+  isConcurrent: boolean,
+  hydrate: boolean,
+</span>) </span>{
+  <span class="hljs-keyword">const</span> root = createContainer(container, isConcurrent, hydrate);
+  <span class="hljs-keyword">this</span>._internalRoot = root;
+}
+ReactRoot.prototype.render = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">
+  children: ReactNodeList, <span class="hljs-comment">// &#x5B9E;&#x9645;&#x4E0A;&#x4F20;&#x5165;&#x7684;ReactELement</span>
+  callback: ?(</span>) =&gt; <span class="hljs-title">mixed</span>,
+): <span class="hljs-title">Work</span> </span>{
+  <span class="hljs-keyword">const</span> root = <span class="hljs-keyword">this</span>._internalRoot;
+  <span class="hljs-keyword">const</span> work = <span class="hljs-keyword">new</span> ReactWork();
+  callback = callback === <span class="hljs-literal">undefined</span> ? <span class="hljs-literal">null</span> : callback;
+  <span class="hljs-keyword">if</span> (callback !== <span class="hljs-literal">null</span>) {
+    work.then(callback);
+  }
+  updateContainer(children, root, <span class="hljs-literal">null</span>, work._onCommit);
+  <span class="hljs-keyword">return</span> work;
+};
+</code></pre>
+<p>reactFiber&#x6709;&#x4E00;&#x4E2A;&#x7279;&#x6027;&#x53EF;&#x4EE5;&#x8BA9;&#x4EFB;&#x52A1;&#x8C03;&#x5EA6;&#x66F4;&#x5408;&#x7406;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x4FDD;&#x8BC1;&#x7528;&#x6237;&#x4E3B;&#x52A8;&#x89E6;&#x53D1;&#x7684;&#x52A8;&#x4F5C;&#x9AD8;&#x4F18;&#x5148;&#x7EA7;&#x6267;&#x884C;&#xFF0C;&#x4E0D;&#x4F1A;&#x56E0;&#x4E3A;&#x4E00;&#x4E2A;&#x8017;&#x65F6;&#x4EFB;&#x52A1;&#x5728;&#x6267;&#x884C;&#x4ECE;&#x800C;&#x5BFC;&#x81F4;&#x65E0;&#x6CD5;&#x54CD;&#x5E94;&#x7528;&#x6237;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;fiber&#x5C31;&#x662F;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#xFF0C;&#x5C06;&#x4E0D;&#x540C;&#x884C;&#x4E3A;&#x89E6;&#x53D1;&#x7684;&#x4E8B;&#x4EF6;&#x91C7;&#x7528;&#x4E0D;&#x540C;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#xFF0C;<code>expirationTime</code>&#x5C31;&#x662F;&#x5B9E;&#x73B0;&#x8FD9;&#x4E2A;&#x80FD;&#x529B;&#x4E00;&#x4E2A;&#x5F88;&#x91CD;&#x8981;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#x5C31;&#x662F;&#x6839;&#x636E;&#x89C4;&#x5219;&#x8BA1;&#x7B97;&#x51FA;&#x65F6;&#x95F4;&#xFF0C;&#x6211;&#x8981;&#x5728;&#x8FD9;&#x4E2A;&#x65F6;&#x95F4;&#x5185;&#xFF0C;&#x5B8C;&#x6210;&#x8FD9;&#x4E2A;&#x4EFB;&#x52A1;&#xFF0C;&#x9AD8;&#x4F18;&#x5148;&#x7EA7;&#x7684;&#x4EFB;&#x52A1;&#x5C31;&#x8981;&#x5728;&#x77ED;&#x65F6;&#x95F4;&#x5185;&#x5B8C;&#x6210;&#xFF0C;&#x5982;&#x679C;&#x8D85;&#x65F6;&#x4E86;&#x5C31;&#x8981;&#x7ACB;&#x5373;&#x6267;&#x884C;&#xFF0C;&#x4FDD;&#x8BC1;&#x4E86;&#x4E0D;&#x4F1A;&#x56E0;&#x4E3A;&#x63D2;&#x961F;&#x8FDB;&#x6765;&#x4E86;&#xFF0C;&#x4EFB;&#x52A1;&#x5C31;&#x4E00;&#x76F4;&#x963B;&#x585E;&#x4E0D;&#x6267;&#x884C;&#xFF0C;&#x5F53;&#x4E00;&#x4E2A;&#x9AD8;&#x4F18;&#x5148;&#x7EA7;&#x7684;&#x4EFB;&#x52A1;&#x63D2;&#x961F;&#x8FDB;&#x6765;&#x4E86;&#xFF0C;&#x9700;&#x8981;&#x6267;&#x884C;&#x9AD8;&#x4F18;&#x5148;&#x7EA7;&#x7684;&#x4EFB;&#x52A1;&#xFF0C;&#x8FD9;&#x4E2A;&#x90FD;&#x662F;react&#x7684;&#x4EFB;&#x52A1;&#x8C03;&#x5EA6;&#x5668;&#x5E2E;&#x6211;&#x4EEC;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x540E;&#x8FB9;&#x4F1A;&#x8BF4;&#x5230;&#x3002;</p>
+<pre><code class="lang-js"><span class="hljs-comment">// &#x66F4;&#x65B0;FiberRoot&#x8282;&#x70B9; &#x521D;&#x59CB;&#x5316;&#x66F4;&#x65B0;&#x90FD;&#x4F1A;&#x8C03;&#x7528;</span>
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateContainer</span>(<span class="hljs-params">
+  element: ReactNodeList,
+  container: OpaqueRoot,
+  parentComponent: ?React$Component&lt;any, any&gt;,
+  callback: ?Function,
+</span>): <span class="hljs-title">ExpirationTime</span> </span>{
+  <span class="hljs-keyword">const</span> current = container.current; <span class="hljs-comment">// &#x83B7;&#x53D6;&#x8DDF;&#x8282;&#x70B9;&#x7684;rootFiber</span>
+  <span class="hljs-keyword">const</span> currentTime = requestCurrentTime(); <span class="hljs-comment">// &#x83B7;&#x53D6;&#x5F53;&#x524D;&#x65F6;&#x95F4;now-&#x521D;&#x59CB;&#x5316;&#x65F6;&#x95F4;</span>
+  <span class="hljs-keyword">const</span> expirationTime = computeExpirationForFiber(currentTime, current); <span class="hljs-comment">// &#x521D;&#x59CB;&#x5316;&#x65F6;&#x662F;SYNC&#x4E5F;&#x5C31;&#x662F;&#x6700;&#x5927;&#x4F18;&#x5148;&#x7EA7;</span>
+  <span class="hljs-keyword">return</span> updateContainerAtExpirationTime(
+    element,
+    container,
+    parentComponent,
+    expirationTime,
+    callback,
+  );
+}
+<span class="hljs-comment">// &#x8BBE;&#x7F6E;context&#x5E76;&#x5F00;&#x542F;root update</span>
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateContainerAtExpirationTime</span>(<span class="hljs-params">
+  element: ReactNodeList,
+  container: OpaqueRoot,
+  parentComponent: ?React$Component&lt;any, any&gt;,
+  expirationTime: ExpirationTime,
+  callback: ?Function,
+</span>) </span>{
+  <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> If this is a nested container, this won&apos;t be the root.</span>
+  <span class="hljs-keyword">const</span> current = container.current; <span class="hljs-comment">// &#x83B7;&#x53D6;rootFiber&#x8282;&#x70B9;</span>
+  <span class="hljs-keyword">const</span> context = getContextForSubtree(parentComponent);
+  <span class="hljs-keyword">if</span> (container.context === <span class="hljs-literal">null</span>) {
+    container.context = context;
+  } <span class="hljs-keyword">else</span> {
+    container.pendingContext = context;
+  }
+
+  <span class="hljs-keyword">return</span> scheduleRootUpdate(current, element, expirationTime, callback);
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="description.html" class="navigation navigation-prev " aria-label="Previous page: ReactDOM">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="fiber.html" class="navigation navigation-next " aria-label="Next page: fiber">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"render","level":"1.3.1","depth":2,"next":{"title":"fiber","level":"1.3.2","depth":2,"path":"react-dom/fiber.md","ref":"react-dom/fiber.md","articles":[]},"previous":{"title":"ReactDOM","level":"1.3","depth":1,"path":"react-dom/description.md","ref":"react-dom/description.md","articles":[{"title":"render","level":"1.3.1","depth":2,"path":"react-dom/render.md","ref":"react-dom/render.md","articles":[]},{"title":"fiber","level":"1.3.2","depth":2,"path":"react-dom/fiber.md","ref":"react-dom/fiber.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"react-dom/render.md","mtime":"2020-07-07T10:05:28.807Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-07T09:46:27.279Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
