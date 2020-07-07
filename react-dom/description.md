@@ -1,7 +1,8 @@
-# React 分析
+# ReactDOM 分析
 
-react 目前的主要逻辑已经拆分成几个单独的目录，每个模块负责不同的内容。做为第一个章，先来看 React 这个文件。直接看入口文件
+我们实际在写代码时基本只会在入口文件使用这个文件的`render`,但react中大部分逻辑都在这个文件下,先看一下render方法
 
+[ReactDOM.render](render.md)
 ```js
 const React = {
   Children: {
