@@ -86,7 +86,7 @@ ReactRoot.prototype.render = function(
 };
 ```
 
-reactFiber有一个特性可以让任务调度更合理，我们要保证用户主动触发的动作高优先级执行，不会因为一个耗时任务在执行从而导致无法响应用户的操作，fiber就是解决这个问题的，将不同行为触发的事件采用不同的优先级，`expirationTime`就是实现这个能力一个很重要的内容，主要作用就是根据规则计算出时间，我要在这个时间内，完成这个任务，高优先级的任务就要在短时间内完成，如果超时了就要立即执行，保证了不会因为插队进来了，任务就一直阻塞不执行，当一个高优先级的任务插队进来了，需要执行高优先级的任务，这个都是react的任务调度器帮我们实现的，后边会说到。
+reactFiber有一个特性可以让任务调度更合理，我们要保证用户主动触发的动作高优先级执行，不会因为一个耗时任务在执行从而导致无法响应用户的操作，[fiber](fiber.md)就是解决这个问题的，将不同行为触发的事件采用不同的优先级，[expirationTime](expirationTime.md)就是实现这个能力一个很重要的内容，主要作用就是根据规则计算出时间，我要在这个时间内，完成这个任务，高优先级的任务就要在短时间内完成，如果超时了就要立即执行，保证了不会因为插队进来了，任务就一直阻塞不执行，当一个高优先级的任务插队进来了，需要执行高优先级的任务，这个都是react的任务调度器帮我们实现的，后边会说到。
 
 
 ```js
@@ -118,13 +118,12 @@ export function updateContainerAtExpirationTime(
 ) {
   // TODO: If this is a nested container, this won't be the root.
   const current = container.current; // 获取rootFiber节点
-  const context = getContextForSubtree(parentComponent);
+  const context = getContextForSubtree(parentComponent);// 获取并设置context
   if (container.context === null) {
     container.context = context;
   } else {
     container.pendingContext = context;
   }
-
   return scheduleRootUpdate(current, element, expirationTime, callback);
 }
 ```

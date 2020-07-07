@@ -8,3 +8,4 @@
 * [ReactDOM](react-dom/description.md)
   * [render](react-dom/render.md)
   * [fiber](react-dom/fiber.md)
+  * [expirationTime](react-dom/expirationTime.md)
