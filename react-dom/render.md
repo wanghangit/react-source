@@ -126,5 +126,36 @@ export function updateContainerAtExpirationTime(
   }
   return scheduleRootUpdate(current, element, expirationTime, callback);
 }
+
+function scheduleRootUpdate(
+  current: Fiber,
+  element: ReactNodeList,
+  expirationTime: ExpirationTime,
+  callback: ?Function,
+) {
+  const update = createUpdate(expirationTime); //创建一个update对象
+  // Caution: React DevTools currently depends on this property
+  // being called "element".
+  update.payload = {element};
+
+  callback = callback === undefined ? null : callback;
+  if (callback !== null) {
+    warningWithoutStack(
+      typeof callback === 'function',
+      'render(...): Expected the last optional `callback` argument to be a ' +
+        'function. Instead received: %s.',
+      callback,
+    );
+    update.callback = callback;
+  }
+
+  flushPassiveEffects();
+  enqueueUpdate(current, update); // 将update插入Fiber的更新队列
+  scheduleWork(current, expirationTime); // 开启任务调度
+
+  return expirationTime;
+}
 ```
+
+到这里初始化挂载的第一阶段已经完成了`scheduleWork`会单独一个章节来讲
 

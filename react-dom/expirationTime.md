@@ -8,16 +8,18 @@
 
 ```js
 function requestCurrentTime() {
-  if (isRendering) {// 已经在渲染，返回之前计算的结果
+  if (isRendering) {
+    // 已经在渲染，返回之前计算的结果
     // We're already rendering. Return the most recently read time.
     return currentSchedulerTime;
   }
   // Check if there's pending work.
-  findHighestPriorityRoot();// 找到优先级任务最高的root一般场景下只有一个
+  findHighestPriorityRoot(); // 找到优先级任务最高的root一般场景下只有一个
   if (
     nextFlushedExpirationTime === NoWork ||
     nextFlushedExpirationTime === Never
-  ) {// 如果当前没有任务要做
+  ) {
+    // 如果当前没有任务要做
     // If there's no pending work, or if the pending work is offscreen, we can
     // read the current time without risk of tearing.
     recomputeCurrentRendererTime(); // 从新计算时间
@@ -38,7 +40,7 @@ function recomputeCurrentRendererTime() {
 }
 ```
 
-针对ExpirationTime涉及到很多计算不方便理解直接将源码拷贝出来，除去了不支持的语法，可以直接拷贝到控制台运行
+针对 ExpirationTime 涉及到很多计算不方便理解直接将源码拷贝出来，除去了不支持的语法，可以直接拷贝到控制台运行
 
 ```js
 /**
@@ -49,8 +51,8 @@ function recomputeCurrentRendererTime() {
  *
  * @flow
  */
-const __DEV__=  false
-const MAX_SIGNED_31_BIT_INT = 1073741823
+const __DEV__ = false;
+const MAX_SIGNED_31_BIT_INT = 1073741823;
 const NoWork = 0;
 const Never = 1;
 const Sync = MAX_SIGNED_31_BIT_INT;
@@ -72,16 +74,12 @@ function ceiling(num, precision) {
   return (((num / precision) | 0) + 1) * precision;
 }
 
-function computeExpirationBucket(
-  currentTime,
-  expirationInMs,
-  bucketSizeMs,
-) {
+function computeExpirationBucket(currentTime, expirationInMs, bucketSizeMs) {
   return (
     MAGIC_NUMBER_OFFSET -
     ceiling(
       MAGIC_NUMBER_OFFSET - currentTime + expirationInMs / UNIT_SIZE,
-      bucketSizeMs / UNIT_SIZE,
+      bucketSizeMs / UNIT_SIZE
     )
   );
 }
@@ -89,13 +87,11 @@ function computeExpirationBucket(
 const LOW_PRIORITY_EXPIRATION = 5000;
 const LOW_PRIORITY_BATCH_SIZE = 250;
 
-function computeAsyncExpiration(
-  currentTime,
-) {
+function computeAsyncExpiration(currentTime) {
   return computeExpirationBucket(
     currentTime,
     LOW_PRIORITY_EXPIRATION,
-    LOW_PRIORITY_BATCH_SIZE,
+    LOW_PRIORITY_BATCH_SIZE
   );
 }
 
@@ -117,19 +113,18 @@ function computeInteractiveExpiration(currentTime) {
   return computeExpirationBucket(
     currentTime,
     HIGH_PRIORITY_EXPIRATION,
-    HIGH_PRIORITY_BATCH_SIZE,
+    HIGH_PRIORITY_BATCH_SIZE
   );
 }
 
-computeInteractiveExpiration(1000) // 982
-computeInteractiveExpiration(1007) // 982
-computeInteractiveExpiration(1010) // 992
-computeAsyncExpiration(1000) // 497
-computeAsyncExpiration(1020) // 497
-
+computeInteractiveExpiration(1000); // 982
+computeInteractiveExpiration(1007); // 982
+computeInteractiveExpiration(1010); // 992
+computeAsyncExpiration(1000); // 497
+computeAsyncExpiration(1020); // 497
 ```
 
-看最后几个调用方法`computeInteractiveExpiration`属于高优先级任务，`computeAsyncExpiration`是普通异步任务，计算出来的值是越大优先级越高，还有一点就是当传入的参数差距比较小时，得出来的结果是一样的，这也是保证前后2次调用更新但时间相差很短得到的优先级是一样的。主要是下边这个方法实现的,有一个取整的过程。我认为理解到这里就可以了。
+看最后几个调用方法`computeInteractiveExpiration`属于高优先级任务，`computeAsyncExpiration`是普通异步任务，计算出来的值是越大优先级越高，还有一点就是当传入的参数差距比较小时，得出来的结果是一样的，这也是保证前后 2 次调用更新但时间相差很短得到的优先级是一样的。主要是下边这个方法实现的,有一个取整的过程。我认为理解到这里就可以了。
 
 ```JS
 function ceiling(num, precision) {
